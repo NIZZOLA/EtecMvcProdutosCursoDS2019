@@ -15,13 +15,15 @@ namespace MVCProdutos.Models
         public string Descricao { get; set; }
         [MaxLength(2)]
         public string UnidadeDeMedida { get; set; }
+
+        [Range(0,9999999)]
         public decimal ValorDeCusto { get; set; }
 
         public decimal MargemDeLucro { get; set; }
         public decimal ValorDeVenda { get; set; }
 
-        public DateTime DataDaInclusao { get; set; }
-        public DateTime DataDaAlteracao { get; set; }
+        public DateTime? DataDaInclusao { get; set; }
+        public DateTime? DataDaAlteracao { get; set; }
 
         public decimal Estoque { get; set; }
         public bool Ativo { get; set; }

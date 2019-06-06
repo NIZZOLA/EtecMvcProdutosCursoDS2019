@@ -1,4 +1,5 @@
 ﻿using MVCProdutos.Models;
+using MVCProdutos.Validators;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,17 +11,24 @@ namespace MVCProdutos.Services
     public class ProdutosService
     {
         private MVCProdutosContext db = new MVCProdutosContext();
+        private ProdutoValidator validator = new ProdutoValidator();
 
         public bool Salvar( Produto prod )
         {
-            db.Produtos.Add(prod);
-            db.SaveChanges();
+            if (validator.ValidarInclusao(prod))
+            {
+                prod.DataDaInclusao = DateTime.Now;
+                db.Produtos.Add(prod);
+                db.SaveChanges();
+                return true;
+            }
 
-            return true;
+            return false;
         }
 
         public bool Atualizar( Produto prod )
         {
+            prod.DataDaAlteracao = DateTime.Now;
             db.Entry(prod).State = EntityState.Modified;
             db.SaveChanges();
 
